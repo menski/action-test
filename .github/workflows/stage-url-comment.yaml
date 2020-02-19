@@ -11,6 +11,13 @@ jobs:
         with:
           script: |
             const branch = context.payload.pull_request.head.ref
+
+            const pattern = /^ope-\d+(-|$)/i
+            if (!pattern.test(branch)) {
+                console.log(`Ignoring PR for branch ${branch} as it does not fit branch name pattern`)
+                return
+            }
+
             const prefix = branch.split('-', 2).join('-')
             const nodeploy = branch.endsWith('-nodeploy')
 
