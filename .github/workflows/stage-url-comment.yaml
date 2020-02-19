@@ -1,23 +1,30 @@
-name: Add comment with stage URL to pull request
+name: Add comment with useful URLs to pull request
 on: pull_request
 
 jobs:
   add-comment:
-    name: Add comment to issue
+    name: Add Links to PR
     runs-on: ubuntu-latest
     steps:
-      - name: comment PR
+      - name: Create comment
         uses: actions/github-script@0.5.0
         with:
-          github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const prefix = context.payload.pull_request.head.ref.split('-', 2).join('-')
-            const jira = `https://app.camunda.com/jira/browse/${prefix.toUpperCase()}`
-            const stage = `https://${prefix.toLowerCase()}.operate.camunda.cloud`
+            const branch = context.payload.pull_request.head.ref
+            const prefix = branch.split('-', 2).join('-')
+            const nodeploy = branch.endsWith('-nodeploy')
+
+            const urls = {}
+
+            urls.JIRA = `https://app.camunda.com/jira/browse/${prefix.toUpperCase()}`
+            urls.Stage = nodeploy ? 'not deployed' : `https://${prefix.toLowerCase()}.operate.camunda.cloud`
+            urls.Jenkins = `https://ci.operate.camunda.cloud/job/camunda-operate/job/${branch}`
+
+            const body = Object.entries(url).map(e => `|${e[0]}|${e[1]}|`).join('\n')
 
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `|Link|URL|\n|----|----|\n|JIRA|${jira}|\n|Stage|${stage}|`
+              body: `|Link|URL|\n|----|----|\n${body}`
             })
