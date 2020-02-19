@@ -2,7 +2,7 @@ name: Add comment with useful URLs to pull request
 on:
     pull_request:
         branches:
-            - ope-**
+            - OPE-**
 
 
 jobs:
