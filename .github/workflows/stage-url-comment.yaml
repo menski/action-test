@@ -20,7 +20,7 @@ jobs:
             urls.Stage = nodeploy ? 'not deployed' : `https://${prefix.toLowerCase()}.operate.camunda.cloud`
             urls.Jenkins = `https://ci.operate.camunda.cloud/job/camunda-operate/job/${branch}`
 
-            const body = Object.entries(url).map(e => `|${e[0]}|${e[1]}|`).join('\n')
+            const body = Object.entries(urls).map(e => `|${e[0]}|${e[1]}|`).join('\n')
 
             github.issues.createComment({
               issue_number: context.issue.number,
