@@ -15,7 +15,7 @@ jobs:
             const pattern = /^ope-\d+(-|$)/i
             console.log(branch)
             console.log(pattern.test(branch))
-            if (pattern.test(branch)) {
+            if (!pattern.test(branch)) {
                 return
             }
 
