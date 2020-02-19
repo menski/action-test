@@ -1,7 +1,5 @@
 name: Add comment with stage URL to pull request
-on:
-    pull_request:
-        types: opened
+on: pull_request
 jobs:
   add-comment:
     name: Add comment to issue
