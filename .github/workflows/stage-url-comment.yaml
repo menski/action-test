@@ -1,9 +1,5 @@
 name: Add comment with useful URLs to pull request
-on:
-    pull_request:
-        branches:
-            - 'OPE-855'
-
+on: pull_request
 
 jobs:
   add-comment:
@@ -15,6 +11,12 @@ jobs:
         with:
           script: |
             const branch = context.payload.pull_request.head.ref
+
+            const pattern = /^ope-\d+(-|$)/i
+            if (pattern.test(branch)) {
+                return
+            }
+
             const prefix = branch.split('-', 2).join('-')
             const nodeploy = branch.endsWith('-nodeploy')
 
