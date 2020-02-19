@@ -10,7 +10,7 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueId = context.ref.split('-', 2).join('-')
+            const issueId = context.head_ref.split('-', 2).join('-')
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
