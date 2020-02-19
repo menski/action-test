@@ -1,6 +1,6 @@
 name: Inspect Contexts
 
-on: [pull-request]
+on: [pull_request]
 
 jobs:
   build:
