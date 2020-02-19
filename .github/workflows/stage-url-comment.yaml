@@ -14,6 +14,7 @@ jobs:
 
             const pattern = /^ope-\d+(-|$)/i
             if (!pattern.test(branch)) {
+                console.log(`Ignoring PR for branch ${branch} as it does not fit branch name pattern`)
                 return
             }
 
