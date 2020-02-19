@@ -8,8 +8,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: comment PR
-        uses: unsplash/comment-on-pr@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        uses: actions/github-script@0.5.0
         with:
-          msg: "Check out this message!"
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            const issueId = context.head_ref.split('-', 2).join('-')
+            github.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Staging enviroment will be availabe at htts://${issueId}.operate.camunda.cloud`
+            })
