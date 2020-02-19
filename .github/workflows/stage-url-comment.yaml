@@ -1,5 +1,10 @@
 name: Add comment with stage URL to pull request
-on: pull_request
+on:
+    pull_request:
+        types: opened
+        branches:
+            - '[oO][pP][eE]-[0-9]+-**'
+
 jobs:
   add-comment:
     name: Add comment to issue
@@ -10,10 +15,13 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const issueId = context.payload.pull_request.head.ref.split('-', 2).join('-')
+            const prefix = context.payload.pull_request.head.ref.split('-', 2).join('-')
+            const jira = `https://app.camunda.com/jira/browse/${prefix.toUpperCase()}`
+            const stage = `https://${prefix.toLowerCase()}.operate.camunda.cloud`
+
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Staging enviroment will be availabe at https://${issueId}.operate.camunda.cloud`
+              body: `JIRA: ${jira}\nStage: ${stage}`
             })
