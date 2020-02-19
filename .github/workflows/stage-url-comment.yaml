@@ -10,11 +10,10 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            console.log(context)
-            const issueId = context.head_ref.split('-', 2).join('-')
+            console.log(context.payload.pull_request.head)
             github.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `Staging enviroment will be availabe at htts://${issueId}.operate.camunda.cloud`
+              body: `Staging enviroment will be availabe at htts://.operate.camunda.cloud`
             })
