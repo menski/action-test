@@ -1,7 +1,6 @@
 name: Add comment with stage URL to pull request
 on:
     pull_request:
-        types: opened
         branches:
             - '[oO][pP][eE]-[0-9]+-**'
 
