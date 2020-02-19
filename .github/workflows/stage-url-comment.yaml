@@ -13,6 +13,8 @@ jobs:
             const branch = context.payload.pull_request.head.ref
 
             const pattern = /^ope-\d+(-|$)/i
+            console.log(branch)
+            console.log(pattern.test(branch))
             if (pattern.test(branch)) {
                 return
             }
